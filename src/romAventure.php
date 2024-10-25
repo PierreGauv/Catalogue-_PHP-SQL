@@ -2,28 +2,18 @@
 require_once('connect.php');
 
 // Récupérer les nouveautés
-$sql = "SELECT * FROM `livres` WHERE `publication` > '0001-01-01'";
+$sql = "SELECT * FROM `livres` WHERE `genre` LIKE 'Roman' AND `sous_genre` LIKE 'Aventure' ORDER BY `genre` ASC";
 $query = $db->prepare($sql);
 $query->execute();
 $news = $query->fetchAll(PDO::FETCH_ASSOC);
 
-// Récupérer les livres par genre
-$genres = ['Roman', 'BD', 'Theatre', 'Grandir', 'Essai'];
-$livres_genre = [];
-
-foreach ($genres as $genre) {
-    $sql = "SELECT * FROM `livres` WHERE `genre` LIKE ? ORDER BY `genre` DESC";
-    $query = $db->prepare($sql);
-    $query->execute([$genre]);
-    $livres_genre[$genre] = $query->fetch(PDO::FETCH_ASSOC);
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le coin littéraire</title>
+    <title></title>
     <style>
         * {
             margin: 0;
@@ -46,30 +36,17 @@ foreach ($genres as $genre) {
             text-shadow: 0px 0px 5px #213447;
         }
 
-        html {
-            overflow: -moz-scrollbars-none; /* Firefox */
-        }
-
-        html::-webkit-scrollbar {
-            display: none; /* Safari and Chrome */
-        } 
-
         h1 {
             font-size: 4.5rem;
-
         }
 
         h2 {
-            margin: 1.5% 0%;
+            margin: 1% 0%;
             font-size: 2rem;
             font-weight: bold;
             text-align: center;
             color: #213447;
             text-shadow: 0px 0px 2px #213447; 
-        }
-
-        .wrap h2:first-of-type {
-            margin: 5% 0%;
         }
 
         img {
@@ -82,7 +59,7 @@ foreach ($genres as $genre) {
             position: relative;
             width: 100%;
             overflow: hidden;
-            margin-bottom: 1%;
+            margin-bottom: 0.5%;
         }
 
         .ligne {
@@ -234,91 +211,11 @@ foreach ($genres as $genre) {
 <body>
     <?php include 'nav.php'; ?>
 
-    <section>
-        <div class="header">
-            <h1>Bienvenue au coin<br>de littérature<br><br>Bonne visite</h1>
-        </div>
-    </section>
-    <section>
-        <div class="nouveautes">
-            <h2>NOUVEAUTES</h2>
-            <button class="arrow arrow-left">&#10094;</button>
-            <div class="ligne">
-                <?php foreach($news as $new): ?>
-                    <div class="carte">
-                        <a href="fiche_produit.php?id=<?=$new["id"]?>">
-                            <img src="<?=$new['image']?>" alt="<?=$new['titre']?>">
-                        </a>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-            <button class="arrow arrow-right">&#10095;</button>
-        </div>
-    </section>
-    <section>
-        <div class="categories">
-            <?php foreach($genres as $genre): ?>
-                <div class="wrap">
-                    <h2><?= $genre ?></h2>
-                    <?php if (isset($livres_genre[$genre])): ?>
-                        <div class="pad_carte">
-                            <a href="<?= $genre ?>.php?id=<?=$livres_genre[$genre]["id"]?>">
-                                <img src="<?=$livres_genre[$genre]['image'] ?>" alt="<?= $livres_genre[$genre]['auteur'] ?>">
-                            </a>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </section>
+    <?php include 'affiche.php'; ?>
     <footer>
         <?php include 'footer.php'; ?>
     </footer>
 
-    <script>
-        const ligne = document.querySelector('.ligne');
-        const cards = document.querySelectorAll('.carte');
-        const leftArrow = document.querySelector('.arrow-left');
-        const rightArrow = document.querySelector('.arrow-right');
-        let index = 0;
-
-        function showNextImage() {
-            index++;
-            updateCarousel();
-        }
-
-        function showPreviousImage() {
-            index--;
-            updateCarousel();
-        }
-
-        function updateCarousel() {
-            const translateX = -index * (cards[0].clientWidth + 20);
-            ligne.style.transition = 'transform 0.5s ease-in-out';
-            ligne.style.transform = `translateX(${translateX}px)`;
-
-            // Looping logic
-            if (index >= cards.length / 2) {
-                setTimeout(() => {
-                    ligne.style.transition = 'none';
-                    index = 0;
-                    const resetTranslateX = -index * (cards[0].clientWidth + 20);
-                    ligne.style.transform = `translateX(${resetTranslateX}px)`;
-                }, 500);
-            } else if (index < 0) {
-                setTimeout(() => {
-                    ligne.style.transition = 'none';
-                    index = cards.length / 2 - 1;
-                    const resetTranslateX = -index * (cards[0].clientWidth + 20);
-                    ligne.style.transform = `translateX(${resetTranslateX}px)`;
-                }, 500);
-            }
-        }
-
-        leftArrow.addEventListener('click', showPreviousImage);
-        rightArrow.addEventListener('click', showNextImage);
-
-        setInterval(showNextImage, 1200);
-    </script>
+    
 </body>
 </html>

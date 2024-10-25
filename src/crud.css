@@ -8,49 +8,24 @@ body {
     margin-bottom: 20px;
     box-sizing: content-box;
     color: #5b5b5c;
-
-}
-
-.navBarAdmin {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: #213447;
-    color: white;
-    font-size:1.7rem;
-    margin-bottom: 2%;
-}
-
-.logo {
-    margin: 5px 0;
- }
-
-/* .logoNavAdmin img{
-    width: 30%;
-} */
-
-.navBarAdmin_right {
-display: flex;
-}
-
-button {
-    background-color: #213447;
-    border: white;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    justify-content: center;
-    text-decoration: none;
-    font-size: 16px;
-    margin: 4px 0px;
-    cursor: pointer;
-    border-radius: 5px;
 }
 
 h1 {
     margin-bottom: 2%;
     font-size: 1.5rem;
+}
+.paru{
+    margin: 40px 0;
+}
 
+img {
+ 
+    border-radius: 3px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.paru p {
+    margin-bottom: 20px;
 }
 
 table {
@@ -84,6 +59,12 @@ th, td {
     align-items: center;
     max-width: 800px;
     margin: 0 auto;
+    gap: 2%;
+}
+
+.text_produit p {
+    text-align: left;
+    padding-bottom: 5%;
 
 }
 
@@ -96,7 +77,6 @@ span {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-
 }
 
 
@@ -108,14 +88,12 @@ span {
 .taille2 {
     width: 290px;
     height: 415px;
-
 }
 
 
 .formUpdate .right-column {
     padding-left: 20px;
     width: 820px;
-
 }
 
 
@@ -166,7 +144,7 @@ span {
 
 button.ajouter, button.retour {
     padding: 10px 20px;
-    background-color: #213447;
+    background-color: #427bf5;
     color: white;
     border: none;
     border-radius: 4px;
@@ -174,6 +152,18 @@ button.ajouter, button.retour {
     transition: background-color 0.3s;
 }
 
-button.ajouter:hover, button.retour:hover {
-    background-color: #218838;
+button:hover, button.ajouter:hover, button.retour:hover {
+    background-color: #319948;
+}
+
+.retour {
+    margin-top: 1%;
+}
+
+/*responsive*/
+
+@media (max-width: 1024px) {
+     img {
+        width: 200px;
+    }
 }

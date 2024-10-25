@@ -4,10 +4,10 @@
     box-sizing: border-box;
 }
 
-span{
+/* span{
     color: rgba(255, 255, 255, 0.747);
 
-}
+} */
 .icon{
     display: flex;
     flex-direction: row;
@@ -36,6 +36,12 @@ span{
     align-items: center;
     padding: 10.5px 25px 4px 10px ;
 }
+
+.page_name a {
+    color: white;
+    padding-left: 50px;
+}
+
 .recherche{
     display: flex;
     flex-direction: row;
@@ -140,7 +146,6 @@ flex-direction: column;
 }
 .ligne_separe{
     border-bottom: solid #ffffff 1px;
-    border-right: solid #ffffff 1px;
 }
 
 

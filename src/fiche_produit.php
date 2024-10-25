@@ -5,7 +5,8 @@ if(isset($_GET["id"]) && !empty($_GET["id"])) {
 
     $id = strip_tags($_GET["id"]);
 
-    $sql = "SELECT * FROM livres WHERE id = :id";
+    $sql = "SELECT id, titre, auteur, bio, DATE_FORMAT(publication, '%d-%m-%Y') as publication, genre, sous_genre, resume, prix, image 
+FROM livres WHERE id = :id";
     $query = $db->prepare($sql);
     $query->bindValue(":id", $id, PDO::PARAM_INT);
     $query->execute();
@@ -29,6 +30,7 @@ if(isset($_GET["id"]) && !empty($_GET["id"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="crud.css">
     <title>Page de <?= $livre["titre"] ?></title>
 
 
@@ -39,14 +41,19 @@ if(isset($_GET["id"]) && !empty($_GET["id"])) {
 
 
     <div class="fiche_produit">
-                <h1><?= $livre['titre'] ?></h1>
-                <img src="<?= $livre['image'] ?>" alt="<?= $livre['titre'] ?>">
-                <p><?= nl2br($livre['auteur']) ?></p>
-                <p><?=$livre['resume'] ?></p>
-                <p><?=$livre['bio'] ?></p>
-                <p><?=$livre['prix'] . " €" ?></p>
-                <!-- Ajoutez d'autres détails du produit ici -->
-            </div>
+    <div class="paru">
+                    <h1><?= $livre['titre'] ?></h1>
+                    <p><em><span>Parution le : </em></span><?=$livre['publication'] ?></p>
+                    <img src="<?= $livre['image'] ?>" alt="<?= $livre['titre'] ?>">
+                </div>
+                <div class="text_produit">
+                    <p><em><span>Auteur : </em></span><?= nl2br($livre['auteur']) ?></p>
+                    <p><em><span>Résumé : </em></span><?=$livre['resume'] ?></p>
+                    <p><em><span>L'auteur : </em></span><?=$livre['bio'] ?></p>
+                    <p><em><span>Prix : </em></span><?=$livre['prix'] . " €" ?></p>
+                </div>
+                
+            </div><button onclick="window.history.back();" class="retour">Retour</button>
             <?php include 'footer.php'; ?>
         </body>
         </html>
